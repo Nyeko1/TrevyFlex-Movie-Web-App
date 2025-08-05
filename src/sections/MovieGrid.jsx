@@ -64,7 +64,7 @@ const MovieGrid = () => {
         <form onSubmit={handleSearch} className="px-2 py-2 space-x-3">
           <input
             type="text"
-            placeholder="Enter a name"
+            placeholder="Search for a movie"
             className="outline-none "
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -72,7 +72,7 @@ const MovieGrid = () => {
           <button
             type="submit"
             className="
-          bg-red-600 px-2 rounded"
+          bg-[hsl(214,17%,26%)] px-3 rounded "
           >
             Search
           </button>
