@@ -20,7 +20,6 @@ const MovieGrid = () => {
         // Await promise for the actual data
         const popularMovies = await getPopularMovies();
         setMovies(popularMovies);
-        setloading(false);
       } catch (e) {
         setError(e.message || "Failed to Load Movies");
         console.log(e);
@@ -30,32 +29,53 @@ const MovieGrid = () => {
     }
     FetchMovies();
   }, []);
-  console.log(movies);
 
   // function to handle search
   async function handleSearch(e) {
     e.preventDefault();
-    setQuery("");
     if (query.trim() === "") return;
 
     try {
       setloading(true);
       setError(null);
       const results = await searchMovies(query.trim());
+      
       if (results.length === 0) {
         setMovies([]);
-        setError(`No movies found for ${query}`);
+        setError(`No movies found for "${query}"`);
       } else {
-        setMovies(results);
-        setloading(false);
+        // Filter out movies without poster_path to reduce loading issues
+        const validMovies = results.filter(movie => movie.poster_path);
+        setMovies(validMovies);
+        
+        if (validMovies.length < results.length) {
+          console.log(`Filtered out ${results.length - validMovies.length} movies without posters`);
+        }
       }
     } catch (e) {
       console.log(e);
       setError(e.message || "Failed to load movies");
+      setMovies([]); // Clear movies on error
+    } finally {
+      setloading(false);
+      setQuery(""); // Clear search query after search
+    }
+  }
+
+  // Reset to popular movies
+  const resetToPopular = async () => {
+    try {
+      setloading(true);
+      setError(null);
+      setQuery("");
+      const popularMovies = await getPopularMovies();
+      setMovies(popularMovies);
+    } catch (e) {
+      setError(e.message || "Failed to Load Movies");
     } finally {
       setloading(false);
     }
-  }
+  };
 
   return (
     <section className="w-full flex flex-col items-center">
@@ -65,17 +85,26 @@ const MovieGrid = () => {
           <input
             type="text"
             placeholder="Search for a movie"
-            className="outline-none "
+            className="outline-none bg-transparent text-white placeholder-gray-400"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           <button
             type="submit"
-            className="
-          bg-[hsl(214,17%,26%)] px-3 rounded "
+            className="bg-[hsl(214,17%,26%)] px-3 py-1 rounded hover:bg-[hsl(214,17%,30%)] transition-colors"
+            disabled={loading}
           >
-            Search
+            {loading ? "..." : "Search"}
           </button>
+          {movies.length > 0 && (
+            <button
+              type="button"
+              onClick={resetToPopular}
+              className="bg-gray-600 px-3 py-1 rounded hover:bg-gray-500 transition-colors text-sm"
+            >
+              Popular
+            </button>
+          )}
         </form>
       </div>
 
@@ -83,16 +112,30 @@ const MovieGrid = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4
                 justify-items-center items-start
                 py-4 px-4 mx-4 sm:mx-8 min-h-screen">
-        {loading && <div className=" col-span-full text-center">Loading..</div>}
+        {loading && (
+          <div className="col-span-full text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto mb-2"></div>
+            Loading movies...
+          </div>
+        )}
+        
         {Error && (
-          <div className="col-span-full text-red-500 text-center">{Error}</div>
+          <div className="col-span-full text-red-500 text-center bg-red-50 p-4 rounded-lg">
+            <p>{Error}</p>
+            <button 
+              onClick={resetToPopular}
+              className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+            >
+              Back to Popular Movies
+            </button>
+          </div>
         )}
 
         {/* AnimatePresence will fade cards in/out */}
         <AnimatePresence>
           {!loading && !Error && movies.length > 0
             ? // Displaying the movieCards
-              movies.map((item, index) => (
+              movies.map((item) => (
                 <motion.div
                   key={item.id}
                   layout
@@ -101,7 +144,7 @@ const MovieGrid = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.6 }}
                 >
-                  <MovieCard item={item} key={index} />
+                  <MovieCard item={item} />
                 </motion.div>
               ))
             : null}
