@@ -80,33 +80,36 @@ const MovieGrid = () => {
   return (
     <section className="w-full flex flex-col items-center">
       {/* search Field */}
-      <div className="mt-3 border-2 border-[#cae4f9] rounded-md bg-black text-white shadow-lg">
-        <form onSubmit={handleSearch} className="px-2 py-2 space-x-3">
-          <input
-            type="text"
-            placeholder="Search for a movie"
-            className="outline-none bg-transparent text-white placeholder-gray-400"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="bg-[hsl(214,17%,26%)] px-3 py-1 rounded hover:bg-[hsl(214,17%,30%)] transition-colors"
-            disabled={loading}
-          >
-            {loading ? "..." : "Search"}
-          </button>
-          {movies.length > 0 && (
+     {/* search Field */}
+      <div className="mt-3 w-full max-w-md mx-auto px-4">
+        <div className="border-2 border-[#cae4f9] rounded-md bg-black text-white shadow-lg">
+          <form onSubmit={handleSearch} className="flex items-center gap-2 px-2 py-2">
+            <input
+              type="text"
+              placeholder="Search movies..."
+              className="flex-1 outline-none bg-transparent text-white placeholder-gray-400 text-sm min-w-0"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
             <button
-              type="button"
-              onClick={resetToPopular}
-              className="bg-gray-600 px-3 py-1 rounded hover:bg-gray-500 transition-colors text-sm"
+              type="submit"
+              className="bg-[hsl(214,17%,26%)] px-2 sm:px-3 py-1 rounded hover:bg-[hsl(214,17%,30%)] transition-colors text-xs sm:text-sm whitespace-nowrap"
+              disabled={loading}
             >
-              Popular
+              {loading ? "..." : "Search"}
             </button>
-          )}
-        </form>
-      </div>
+            {movies.length > 0 && (
+              <button
+                type="button"
+                onClick={resetToPopular}
+                className="bg-gray-600 px-2 sm:px-3 py-1 rounded hover:bg-gray-500 transition-colors text-xs sm:text-sm whitespace-nowrap"
+              >
+                Popular
+              </button>
+            )}
+          </form>
+        </div>
+        </div>
 
       {/* Movie Grid container */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4
