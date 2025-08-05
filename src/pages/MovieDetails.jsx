@@ -73,7 +73,7 @@ const MovieDetails = () => {
         {/* Movie-details-view-section */}
         <div className="bg-black text-white flex flex-col items-center p-4 w-full sm:w-[20%] min-h-[400px] space-y-4">
           {/* image */}
-          <div className="w-[180px] h-[250px] flex justify-center items-center">
+          <div className="w-[180px] h-[250px] flex justify-center mt-5 items-center">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
@@ -131,10 +131,10 @@ const MovieDetails = () => {
         </div>
 
         {/* Movie-Play-Section */}
-        <div className="w-[100%] sm:w-[80%]">
+        <div className="w-[100%] sm:w-[80%] ">
           <div className="w-full h-full overflow-hidden">
             {trailerKey ? (
-              <div className="relative w-full h-0 pb-[56.25%]">
+              <div className="relative w-full h-110 pb-[56.25%]">
                 <iframe
                   className="absolute top-0 left-0 w-full h-full"
                   src={`https://www.youtube.com/embed/${trailerKey}`}
