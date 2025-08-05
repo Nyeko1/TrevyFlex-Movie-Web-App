@@ -79,7 +79,6 @@ const MovieGrid = () => {
 
   return (
     <section className="w-full flex flex-col items-center">
-      {/* search Field */}
      {/* search Field */}
       <div className="mt-3 w-full max-w-md mx-auto px-4">
         <div className="border-2 border-[#cae4f9] rounded-md bg-black text-white shadow-lg">
@@ -98,7 +97,7 @@ const MovieGrid = () => {
             >
               {loading ? "..." : "Search"}
             </button>
-            {movies.length > 0 && (
+            {/* {movies.length > 0 && (
               <button
                 type="button"
                 onClick={resetToPopular}
@@ -106,7 +105,7 @@ const MovieGrid = () => {
               >
                 Popular
               </button>
-            )}
+            )} */}
           </form>
         </div>
         </div>
