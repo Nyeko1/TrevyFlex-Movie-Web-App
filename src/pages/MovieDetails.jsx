@@ -12,9 +12,6 @@ const MovieDetails = () => {
   const [genres, setGenres] = useState([]);
   const [productionCompanies, setProdductionCompanies] = useState([]);
   const [trailerKey, setTrailerKey] = useState(null);
-  // const [loading, setloading] = useState(false);
-  // const [Error, setError] = useState(null);
-  // const [query, setQuery] = useState("");
 
   // Fetch-Movie-Details
   useEffect(() => {
@@ -32,7 +29,6 @@ const MovieDetails = () => {
 
     FetchMovieDetails();
   }, [id]);
-  console.log(movie);
 
   // fetch Trailer
   useEffect(() => {
@@ -59,10 +55,10 @@ const MovieDetails = () => {
   }
 
   return (
-    // Movie-Details-Container
-    <div className="min-h-[1190]">
+    
+    <div>
       {/* Title displaying the path of the movie */}
-      <div className=" h-6 flex bg-black text-white ">
+      <div className="h-6 flex bg-black text-white">
         <p className="flex items-center ml-5 text-[12px] sm:text-sm space-x-1 py-3">
           <span>Home</span>
           <span className="text-3xl relative bottom-[7px]">.</span>
@@ -71,7 +67,8 @@ const MovieDetails = () => {
           <span>{movie.title}</span>
         </p>
       </div>
-    {/* Movie details section + movie player */}
+      
+      {/* Movie details section + movie player */}
       <div className="flex flex-col-reverse sm:flex-row lg:flex-row">
         {/* Movie-details-view-section */}
         <div className="bg-black text-white flex flex-col items-center p-4 w-full sm:w-[20%] min-h-[400px] space-y-4">
@@ -85,53 +82,56 @@ const MovieDetails = () => {
           </div>
 
           {/* title */}
-          <div className="text-center  ">
-            <h1 className="font-bold text-lg sm:text-xl  ">{movie.title}</h1>
+          <div className="text-center">
+            <h1 className="font-bold text-lg sm:text-xl">{movie.title}</h1>
           </div>
 
           {/* description */}
-          <div className="text-sm  text-center px-2  ">
+          <div className="text-sm text-center px-2">
             <DescriptionSection overview={movie.overview} />
           </div>
 
-          {/* More Movie Infomration */}
+          {/* More Movie Information */}
           <div className="space-x-1">
             {/* Genres */}
             <span className="text-[12px] font-bold">Genres:</span>
             {genres.map((genre, index) => (
-              <span className=" text-[12px] text-gray-400" key={genre.id}>
+              <span className="text-[12px] text-gray-400" key={genre.id}>
                 {genre.name}
                 {index < genres.length - 1 && ","}
               </span>
             ))}
-            <br></br>
-            {/* Production Compnaies */}
+            <br />
+            
+            {/* Production Companies */}
             <span className="text-[12px] font-bold">
-              Production Campanies:{" "}
+              Production Companies:{" "}
             </span>
             {productionCompanies.map((company, index) => (
-              <span className=" text-[12px] text-gray-400">
+              <span className="text-[12px] text-gray-400" key={company.id}>
                 {company.name}
                 {index < productionCompanies.length - 1 && ","}
               </span>
             ))}
-            <br></br>
+            <br />
+            
             {/* origin-Country */}
             <span className="text-[12px] font-bold">Country:</span>{" "}
-            <span className=" text-[12px] text-gray-400">
+            <span className="text-[12px] text-gray-400">
               {movie.origin_country}
             </span>
-            <br></br>
+            <br />
+            
             {/* Language */}
             <span className="text-[12px] font-bold">Language:</span>{" "}
-            <span className=" text-[12px] text-gray-400">
+            <span className="text-[12px] text-gray-400">
               {movie.original_language}
             </span>
           </div>
         </div>
 
         {/* Movie-Play-Section */}
-        <div className="w-[100%] sm:h-155 sm:w-[80%] ">
+        <div className="w-[100%] sm:w-[80%]">
           <div className="w-full h-full overflow-hidden">
             {trailerKey ? (
               <div className="relative w-full h-0 pb-[56.25%]">
