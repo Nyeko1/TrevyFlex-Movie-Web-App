@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getPopularMovies } from "../services/Api";
-import MovieCard from "../Components/movieCard";
+import MovieCard from "../Components/MovieCard";
 import { searchMovies } from "../services/Api";
 import { motion, AnimatePresence } from "framer-motion";
 
