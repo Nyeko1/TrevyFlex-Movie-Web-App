@@ -87,7 +87,7 @@ const MovieDetails = () => {
           </div>
 
           {/* description */}
-          <div className="text-sm text-center px-2">
+          <div className="text-sm text-center px-2 relative">
             <DescriptionSection overview={movie.overview} />
           </div>
 
